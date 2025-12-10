@@ -1,0 +1,78 @@
+---
+title: "INST 490 COVID-19 Data Visualization"
+output: COVID_19_Data_Visualization
+---
+
+```{r}
+library(tidyverse)
+library(lubridate)
+
+cases100k <- read_csv("MDCOVID19_CasesPer100KpopulationStatewide.csv")
+
+cases100k %>%
+  mutate(ReportDate = as_datetime(ReportDate)) %>%
+  ggplot(aes(x = ReportDate, y = Statewide)) +
+  geom_line(linewidth = 1.2) +
+  theme_minimal() +
+  labs(
+    title = "Statewide COVID-19 Case Rate in Maryland (per 100k)",
+    x = "Date",
+    y = "Cases per 100,000",
+  )
+
+```
+#The statewide case per 100,000 shows an upward trend as COVID-19 spread across Maryland. This highlights how quickly the virus circulated through the early months of the pandemic. This curve sets the stage for understanding the burden placed on counties and health systems. 
+
+```{r}
+deaths <- read_csv("MDCOVID19_ConfirmedDeathsByCounty.csv")
+
+death_long <- deaths %>%
+  pivot_longer(
+    cols = -c(OBJECTID, DATE),
+    names_to = "County",
+    values_to = "Deaths"
+  ) %>%
+  mutate(DATE = as_datetime(DATE))
+
+top5 <- death_long %>%
+  group_by(County) %>%
+  summarize(total = max(Deaths, na.rm = TRUE)) %>%
+  slice_max(total, n = 5) %>%
+  pull(County)
+
+death_long %>%
+  filter(County %in% top5) %>%
+  ggplot(aes(x = DATE, y = Deaths, color = County)) +
+  geom_line(linewidth = 1) +
+  theme_minimal() +
+  labs(
+    title = "COVID-19 Confirmed Deaths Over Time (Top 5 Maryland Counties)",
+    x = "Date",
+    y = "Confirmed Deaths"
+  )
+
+```
+# Given the COVID-19 Vaccination file, this graph seeks to find the top 5 counties in Maryland that suffered from confirmed deaths. The data shows that Baltimore City had faced the highest amount of deaths per county, and Anne Arundel as the lowest of the five. These five counties illustrate the disproportionate impact on Maryland's most populous regions. These differences emphasize how demographic and geographic factors shaped local vulnerability. For the month of December 2021, the dataset indicated no data was present, we can assume that data was missing from the software or just not inputted into the system. Starting from April of 2022,the data was not consistently inputed into the system.
+```{r}
+vacc <- read_csv("MD_COVID19_VaccinationPercentAgeGroupPopulation.csv")
+
+vacc %>%
+  mutate(
+    VACCINATION_DATE = as_datetime(VACCINATION_DATE),
+    FullyVaccinatedCumulative = as.numeric(FullyVaccinatedCumulative)
+  ) %>%
+  filter(!is.na(FullyVaccinatedCumulative)) %>%
+  ggplot(aes(x = VACCINATION_DATE,
+             y = FullyVaccinatedCumulative,
+             color = AgeRange)) +
+  geom_line(linewidth = 1) +
+  theme_minimal() +
+  labs(
+    title = "Maryland COVID-19 Vaccination Rollout by Age Group",
+    x = "Date",
+    y = "Cumulative Fully Vaccinated (%)",
+    color = "Age Group"
+  )
+
+```
+# Fully vaccinated rates increased steadily across all age groups once vaccines became available, with older age groups generally achieving higher coverage earlier. This pattern reflects Maryland’s prioritization strategies and the key role of vaccination in reducing severe outcomes over time.
