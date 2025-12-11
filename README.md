@@ -27,10 +27,11 @@ This graph overlays statewide case rates with cumulative vaccination progress. V
 # 📁 Project Files
 
 - `County.csv` — cleaned county-level cases and deaths  
-- `Statewide.csv` — cleaned statewide vaccination and case-rate data  
+- `Statewide.csv` — cleaned statewide vaccination and case-rate data
+- 'COVID_19_Data_Visualization.Rmd' - Markdown file with graphs/plots 
 - `README.md` — project explanation and documentation  
 
-# 🛠️ Technologies Used
+# Technologies Used
 
 - **R** (tidyverse, ggplot2)  
 - **CSV formatted datasets**  
@@ -44,13 +45,13 @@ This project was completed for a data visualization assignment to explore real p
 - Age based vaccination rollout  
 - The relationship between vaccinations and case trends  
 
-# 👩‍💻 How to Run the Code
+# How to Run the Code
 
 1. Place all CSV files in the same working directory.  
 2. Open any of the `*.rmd` script files.  
 3. Run the script in an R environment (RStudio recommended).  
 4. Each script will produce one of the final visualizations.  
 
-# ✔️ Summary
+# Summary
 
 Together, the three visualizations provide a clear look at how COVID-19 evolved across Maryland, how vaccination unfolded across age groups, and how these two trends interacted over time. The project demonstrates how data visualization can make complex public-health data more understandable and meaningful.
