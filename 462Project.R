@@ -108,12 +108,17 @@ County_long <- Cases_long %>%
 View(County_long)
 
 
+###Main Two Datasets###
+View(Statewide)
+View(County_long)
 
 
-# -------------------------------
-# Data Variables Described + Stats
-# -------------------------------
-  #County Data Set
+
+
+###Data Variables Described + Stats###
+
+  #County Data Set#
+
 #Date
 
 #County
@@ -123,7 +128,7 @@ View(County_long)
 #Deaths
 
 
-  #Statewide Data Set
+  #Statewide Data Set#
 #Data
 
 #AgeRange
