@@ -14,18 +14,19 @@ library(tidyverse)
 county <- read_csv("County.csv")
 
 # Create a line chart showing how daily COVID-19 cases changed over time
-# for each Maryland county in the dataset.
+# for each Maryland county in the dataset. Colored per county for readability 
+# and separation of counties.
 ggplot(county, aes(x = Date, y = Cases, color = County)) +
   
-  # Plot a separate line for each county. The slight transparency helps
+  # Plot a separate line for each county. A line graph allows us to document 
+  # and separate all the counties on a graph. The slight transparency helps
   # prevent the plot from looking too cluttered when many counties overlap.
   geom_line(alpha = 0.7, linewidth = 0.9) +
   
-  # Use a minimal theme to keep the graphic clean and readable.
+  # A minimal theme to keep the graphic clean and readable.
   theme_minimal() +
   
-  # Add a title and axis labels so the visualization can stand alone
-  # without needing additional explanation in the text.
+  # Labels
   labs(
     title = "Daily COVID-19 Cases in Maryland by County",
     x = "Date",
@@ -42,16 +43,18 @@ This graph shows how COVID-10 cases grew across Maryland counties from 2020 onwa
 state <- read_csv("Statewide.csv")
 
 # Plot the cumulative number of fully vaccinated individuals over time,
-# grouped by age range. Each age group gets its own line.
+# grouped by age range. Each age group gets its own line. Color by age range for
+# easy interpretation.
 ggplot(state, aes(x = Date, y = FullyVaccinatedCumulative, color = AgeRange)) +
   
-  # Draw the lines that represent vaccination progress.
+  # A line graph here will be easy to look at every age group separately, 
+  # especially because there are so few of them.
   geom_line(linewidth = 1.2) +
   
-  # Apply a minimal theme to keep the plot simple and easy to read.
+  # Minimal theme to keep the plot simple and easy to read.
   theme_minimal() +
   
-  # Add labels so the figure is self-explanatory when included in a report.
+  # Labels
   labs(
     title = "Cumulative Fully Vaccinated Maryland Residents by Age Group",
     x = "Date",
@@ -68,23 +71,25 @@ This graph highlights how vaccination uptake differed dramatically by age group.
 
 ggplot(state, aes(x = Date)) +
   
-  # Plot the statewide cases per 100,000 residents.
+  # Statewide cases per 100,000 residents.
   # This solid line shows how infection levels changed over time.
   geom_line(aes(y = Cases_per_100), linewidth = 1.1) +
   
-  # Plot cumulative first vaccine doses. Since vaccination numbers are much larger,
-  # we scale them down (divided by 10) so both lines can be compared on the same graph.
-  # A dashed line helps visually separate vaccination trends from case trends.
+  # Cumulative first vaccine doses. A line graph because we're looking at 
+  # trends and we can see the change over time easily with a line graph.
+  # Since vaccination numbers are much larger, we scale them down (divided by 10) 
+  # so both lines can be compared on the same graph.
+  # A dashed line helps visually separate vaccination trends from case trends. 
+  # A smaller linewidth to see the denser areas in the graph.
+  # No color because there are so many cases, we can look at density.
   geom_line(aes(y = FirstDailyDoseCumulative / 10), 
-            linewidth = 1, 
+            linewidth = 0.5, 
             linetype = "dashed") +
   
-  # Use a minimal theme to keep the visualization clean and easy to interpret.
+  # Minimal theme to keep the visualization clean and easy to interpret.
   theme_minimal() +
   
-  # Add a descriptive title and axis labels. The y-axis label explains that
-  # one line is measured in cases per 100K, while the dashed line is a scaled
-  # version of cumulative vaccinations.
+  # Labels
   labs(
     title = "Cases per 100K vs. Vaccination Rollout in Maryland",
     x = "Date",
